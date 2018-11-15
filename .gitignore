@@ -10,3 +10,5 @@ npm-debug.log
 # Backpack build
 dist
 extension.zip
+
+.idea/**

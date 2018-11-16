@@ -3,15 +3,26 @@
     <h3>Image Picker</h3>
     <hr />
     <div v-loading="loading">
-      <el-row v-for="item in mydata">
+      <el-row :gutter="20">
         <el-col :span="12">
-          <div class="frame">
-            <span class="helper"></span>
-            <a v-bind:href="item.location" download><img v-bind:src="item.location" class="thumb"></a>
+          <div v-for="item in lData" :key="item.location">
+            <a @click.stop.prevent="downloadItem(item)">
+              <div class="frame">
+                <span class="helper"></span>
+                <img v-bind:src="item.location" class="thumb">
+              </div>
+            </a>
           </div>
         </el-col>
         <el-col :span="12">
-          <div>{{ item.fileName }}</div>
+          <div v-for="item in rData" :key="item.location">
+            <a @click.stop.prevent="downloadItem(item)">
+              <div class="frame">
+                <span class="helper"></span>
+                <img v-bind:src="item.location" class="thumb">
+              </div>
+            </a>
+          </div>
         </el-col>
       </el-row>
     </div>
@@ -20,14 +31,20 @@
 <script>
 export default {
   data: () => ({
-    mydata: [],
-    loading: false
+    loading: false,
+    lData: [],
+    rData: []
   }),
   computed: { },
   created () {
     this.getTabId().then(this.saveAsHtml).then((results) => {
-      this.mydata = results
-      console.log(this.mydata)
+      for (let i = 0; i < results.length; i++) {
+        if (i % 2 === 0) {
+          this.lData.push(results[i])
+        } else {
+          this.rData.push(results[i])
+        }
+      }
     })
   },
   mounted () { },
@@ -117,6 +134,9 @@ export default {
       } else {
         return null
       }
+    },
+    downloadItem (item) {
+      chrome.downloads.download({url: item.location}, (id) => {})
     }
   }
 }
@@ -133,9 +153,10 @@ export default {
     height: 70px;      /* equals max image height */
     width: 100%;
     border: 1px solid #999999;
+    border-radius: 10px;
     white-space: nowrap;
     text-align: center;
-    margin: 2px 0;
+    margin: 5px 0;
   }
 
   .helper {

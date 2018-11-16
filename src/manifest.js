@@ -14,11 +14,12 @@ module.exports = {
    * @see {@link https://developer.chrome.com/extensions/declare_permissions}
    */
   permissions: [
-      "tabs",
-      "http://*/*",
-      "https://*/*",
-      "<all_urls>",
-      "pageCapture"
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "<all_urls>",
+    "pageCapture",
+    "downloads"
   ],
   browser_action: {
     default_title: 'title',

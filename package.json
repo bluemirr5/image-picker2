@@ -1,16 +1,20 @@
 {
   "name": "image-picker2",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "private": false,
   "description": "chrome extension named 'image picker' version 2",
   "author": "gswon <bluemirr5@gmail.com>",
+  "repository": {
+    "url": "https://github.com/bluemirr5/image-picker2",
+    "type": "github"
+  },
   "scripts": {
     "build": "webpack --config ./build/webpack.prod.js -p --progress  --hide-modules --colors",
     "lint": "eslint --ext .js,.vue src",
     "dev": "webpack --config ./build/webpack.dev.js --hide-modules"
   },
   "dependencies": {
-    "element-ui": "^2.0.1",
+    "element-ui": "^2.9.1",
     "lodash": "^4.17.4",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"

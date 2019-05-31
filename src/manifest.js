@@ -5,7 +5,7 @@ module.exports = {
   name: 'image-picker2',
   description: 'chrome extension named image picker version 2',
   author: 'gswon <bluemirr5@gmail.com>',
-  version: '2.0.0',
+  version: '2.0.1',
   icons: {
     '16': 'icons/16.png',
     '128': 'icons/128.png'
@@ -14,12 +14,12 @@ module.exports = {
    * @see {@link https://developer.chrome.com/extensions/declare_permissions}
    */
   permissions: [
-    "tabs",
-    "http://*/*",
-    "https://*/*",
-    "<all_urls>",
-    "pageCapture",
-    "downloads"
+    'tabs',
+    'http://*/*',
+    'https://*/*',
+    '<all_urls>',
+    'pageCapture',
+    'downloads'
   ],
   browser_action: {
     default_title: 'title',

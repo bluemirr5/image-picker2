@@ -2,14 +2,15 @@
  * @see {@link https://developer.chrome.com/extensions/manifest}
  */
 module.exports = {
-  name: 'image-picker2',
-  description: 'chrome extension named image picker version 2',
+  name: 'image-picker',
+  description: 'chrome extension named image picker version',
   author: 'gswon <bluemirr5@gmail.com>',
-  version: '2.0.1',
+  version: '2.0.2',
   icons: {
     '16': 'icons/16.png',
     '128': 'icons/128.png'
   },
+  homepage_url: 'https://github.com/bluemirr5/image-picker2',
   /**
    * @see {@link https://developer.chrome.com/extensions/declare_permissions}
    */
@@ -22,7 +23,7 @@ module.exports = {
     'downloads'
   ],
   browser_action: {
-    default_title: 'title',
+    default_title: 'image-picker',
     default_popup: 'pages/popup.html'
   },
   background: {

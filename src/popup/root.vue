@@ -45,16 +45,25 @@ export default {
     }
   },
   created () {
-    chrome.tabs.getSelected(null, (tab) => {
-      chrome.pageCapture.saveAsMHTML({ tabId: tab.id }, (htmlData) => {
-        const reader = new FileReader()
-        reader.addEventListener('loadend', () => {
-          const boundary = this.getBoundaryFromBlobStr(reader.result)
-          const contents = reader.result.split(boundary)
-          this.oData = contents.map(it => this.parseContents(it)).filter(it => !!it)
+    const query = {
+      active: true,
+      currentWindow: true
+    }
+    chrome.tabs.query(query, (tabs) => {
+      if (tabs && tabs.length > 0) {
+        const tab = tabs[0]
+        chrome.pageCapture.saveAsMHTML({ tabId: tab.id }, (htmlData) => {
+          if (htmlData) {
+            const reader = new FileReader()
+            reader.addEventListener('loadend', () => {
+              const boundary = this.getBoundaryFromBlobStr(reader.result)
+              const contents = reader.result.split(boundary)
+              this.oData = contents.map(it => this.parseContents(it)).filter(it => !!it)
+            })
+            reader.readAsText(htmlData)
+          }
         })
-        reader.readAsText(htmlData)
-      })
+      }
     })
   },
   mounted () { },
@@ -70,7 +79,7 @@ export default {
         if (newLineSplited.length > 1) {
           ret.location = temp[0]
           ret.fileName = this.filterFileName(ret.location)
-          ret.ext = ret.fileName.slice(ret.fileName.indexOf('.') + 1).toLowerCase()
+          ret.ext = ret.fileName.slice(ret.fileName.indexOf('.') + 1).toLowerCase().split('?', 2)[0]
           ret.imageInfo = {
             width: 0,
             height: 0

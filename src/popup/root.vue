@@ -7,7 +7,8 @@
         <el-col :span="12">
           <el-card class="card" :body-style="{ padding: '0px' }" v-for="item in lData" :key="item.location" v-bind:title="item.fileName">
             <div class="header" @click.stop.prevent="downloadItem(item)">
-              <img v-bind:src="item.location" class="image" @load="onloadImage($event, item)" alt="target">
+              <img v-if="!item.data" v-bind:src="item.location" class="image" @load="onloadImage($event, item)" alt="target">
+              <img v-else v-bind:src="'data:image/'+item.ext+';base64,' + item.data" class="image" @load="onloadImage($event, item)" alt="target">
             </div>
             <div class="desc" @click.stop.prevent="downloadItem(item)">
               <span>[ <strong>{{ item.imageInfo.width }}</strong> X <strong>{{ item.imageInfo.height }}</strong> ] </span> type:   <strong>{{ item.ext  }}</strong>
@@ -17,7 +18,8 @@
         <el-col :span="12">
           <el-card class="card" :body-style="{ padding: '0px' }" v-for="item in rData" :key="item.location" v-bind:title="item.fileName">
             <div class="header" @click.stop.prevent="downloadItem(item)">
-              <img v-bind:src="item.location" class="image" @load="onloadImage($event, item)" alt="target">
+              <img v-if="!item.data" v-bind:src="item.location" class="image" @load="onloadImage($event, item)" alt="target">
+              <img v-else v-bind:src="'data:image/'+item.ext+';base64,' + item.data" class="image" @load="onloadImage($event, item)" alt="target">
             </div>
             <div class="desc" @click.stop.prevent="downloadItem(item)">
               <span>[ <strong>{{ item.imageInfo.width }}</strong> X <strong>{{ item.imageInfo.height }}</strong> ] </span> type:   <strong>{{ item.ext  }}</strong>
@@ -69,7 +71,8 @@ export default {
   mounted () { },
   methods: {
     parseContents (contentsString) {
-      // const me = this
+      const forBase65Str = contentsString.split('\r\n\r\n')
+      console.log(forBase65Str)
       const newLineSplited = contentsString.split('\n', 5)
       const contentTypeStr = newLineSplited[1].split('Content-Type: ', 2)
       if (contentTypeStr[1] && (contentTypeStr[1].indexOf('image/') !== -1)) {
@@ -77,6 +80,9 @@ export default {
         const contentsStringSplited = newLineSplited[3].split('Content-Location: ', 2)
         const temp = contentsStringSplited[1].split('\n', 2)
         if (newLineSplited.length > 1) {
+          if (forBase65Str.length >= 2) {
+            ret.data = forBase65Str[1]
+          }
           ret.location = temp[0]
           ret.fileName = this.filterFileName(ret.location)
           ret.ext = ret.fileName.slice(ret.fileName.indexOf('.') + 1).toLowerCase().split('?', 2)[0]

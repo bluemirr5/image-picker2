@@ -5,7 +5,7 @@ module.exports = {
   name: 'image-picker',
   description: 'chrome extension named image picker version',
   author: 'gswon <bluemirr5@gmail.com>',
-  version: '2.0.3',
+  version: '2.0.4',
   icons: {
     '16': 'icons/16.png',
     '128': 'icons/128.png'

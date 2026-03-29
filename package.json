@@ -27,7 +27,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "clean-webpack-plugin": "^0.1.18",
-    "copy-webpack-plugin": "^4.4.1",
+    "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^0.28.9",
     "eslint": "^4.18.1",
     "eslint-config-standard": "^11.0.0",
